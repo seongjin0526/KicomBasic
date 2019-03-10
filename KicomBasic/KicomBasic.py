@@ -48,3 +48,5 @@ if __name__ == '__main__' :
         os.remove(fname)
     else :
         print('{} : ok'.format(fname))
+        print('Thanks')
+       
