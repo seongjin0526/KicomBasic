@@ -46,6 +46,7 @@ if __name__ == '__main__' :
     if ret == True :
         print('{} : {}'.format(fname, vname))
         os.remove(fname)
+        print('Complete to delete Malware File!')
     else :
         print('{} : ok'.format(fname))
         print('Thanks')
