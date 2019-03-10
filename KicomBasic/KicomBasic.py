@@ -2,19 +2,28 @@ import sys
 import os
 import hashlib
 
-VirusDB = [ 
-    '44d88612fea8a8f36de82e1278abb02f:EICAR Test:68' ,
-    '77bff0b143e4840ae73d4582a8914a438914a43:Dummy Test:65'
-    ]
-
+MalewareDB = []
 PatternDB = [] # Malware 패턴 저장됨.
 SizeDB =[] # Malware를 Size로 판단하기 위함
 
+def LoadMalwareDB():
+    fp =open('MalwareDB.db','rb')
+
+    while True:
+        line = fp.readline()
+        if not line : break
+
+        line = line.strip() # remove \r\n
+        MalewareDB.append(line)
+
+    fp.close()
+
+
 # VirusDB를 PatternDB로 변환
-def MakeVirusDB() :
-    for pattern in VirusDB :
+def MakePatternDB() :
+    for pattern in MalewareDB :
         t = []
-        v = pattern.split(':')
+        v = pattern.split(b':')
         t.append(v[0])
         t.append(v[1])
         PatternDB.append(t)
@@ -32,7 +41,8 @@ def SearchVDB(fmd5):
 
 # main
 if __name__ == '__main__' :
-    MakeVirusDB()
+    LoadMalwareDB()
+    MakePatternDB()
 
     if len(sys.argv) != 2:
         print('Usage : KicomBasic.py [File]')
@@ -49,12 +59,15 @@ if __name__ == '__main__' :
         m = hashlib.md5()
         m.update(buf)
         fmd5 = m.hexdigest()
-
-        ret, vname = SearchVDB(fmd5)
+        
+        ret, vname = SearchVDB(bytes(fmd5,"utf-8"))
         if ret == True :
             print('{} : {}'.format(fname, vname))
             os.remove(fname)
             print('Complete to delete Malware File!')
+        else :
+            print('{} : ok'.format(fname))
+            print('Thanks')
     else :
         print('{} : ok'.format(fname))
         print('Thanks')
