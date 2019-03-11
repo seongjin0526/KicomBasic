@@ -38,7 +38,7 @@ def DecodeKMD(FileName):
         
         buf4 = zlib.decompress(buf3)
 
-        print(buf4)
+        
 
         return buf4
     except(SystemError):
@@ -57,11 +57,13 @@ def EncodeKMD(FileName):
     # File Compress
     buf2 = zlib.compress(buf)
 
+    print(buf2)
+
     buf3 = b''
     for i in buf2:
         buf3 += (i^0xFF).to_bytes(1,'little')
     
-    print(buf3)
+    
 
     # Make Header
     buf4 = b'KAVM' + buf3
