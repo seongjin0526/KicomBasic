@@ -60,7 +60,7 @@ if __name__ == '__main__' :
         m.update(buf)
         fmd5 = m.hexdigest()
         
-        ret, vname = SearchVDB(bytes(fmd5,"utf-8"))
+        ret, vname = SearchVDB(bytes(fmd5,"ascii"))
         if ret == True :
             print('{} : {}'.format(fname, vname))
             os.remove(fname)

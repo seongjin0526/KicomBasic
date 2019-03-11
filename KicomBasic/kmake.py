@@ -2,7 +2,7 @@ import sys
 import zlib
 import hashlib
 import os
-import struct
+import codecs
 
 """
     Maleware Pattern FIle Encryption
@@ -23,19 +23,22 @@ def DecodeKMD(FileName):
         for i in range(3):
             md5 = hashlib.md5()
             md5.update(f)
-            f = md5.hexdigest().encode('utf-8')
+            f = md5.hexdigest().encode('ascii')
 
         if f != fmd5:
             raise SystemError
 
         
-        temp = buf2.decode('utf-8')
         buf3 = b''
-        for i in temp[4:]:
-            buf3 += chr(i^0xFF) # <-- Error
+        for i in buf2[4:]:
+            buf3 += (i^0xFF).to_bytes(1,'little')
+            #buf3 += chr(i^0xFF) # <-- Error
         
+        print(buf3)
         
         buf4 = zlib.decompress(buf3)
+
+        print(buf4)
 
         return buf4
     except(SystemError):
@@ -52,21 +55,23 @@ def EncodeKMD(FileName):
     fp.close()
 
     # File Compress
-    buf2 = bytearray(zlib.compress(buf))
-    print(buf2)
-    buf3 = ''
-    for i in buf2:
-        buf3 += chr(i^0xFF)
+    buf2 = zlib.compress(buf)
 
+    buf3 = b''
+    for i in buf2:
+        buf3 += (i^0xFF).to_bytes(1,'little')
+    
     print(buf3)
+
     # Make Header
-    buf4 = b'KAVM' + buf3.encode('utf-8')
+    buf4 = b'KAVM' + buf3
+
 
     f = buf4   
     for i in range(3):
         md5 = hashlib.md5()
         md5.update(f)
-        f = md5.hexdigest().encode('utf-8')
+        f = md5.hexdigest().encode('ascii')
 
     buf4 += f
 
