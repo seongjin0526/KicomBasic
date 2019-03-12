@@ -28,7 +28,6 @@ def DecodeKMD(FileName):
         if f != fmd5:
             raise SystemError
 
-        
         buf3 = b''
         for i in buf2[4:]:
             buf3 += (i^0xFF).to_bytes(1,'little')
@@ -37,8 +36,6 @@ def DecodeKMD(FileName):
         print(buf3)
         
         buf4 = zlib.decompress(buf3)
-
-        
 
         return buf4
     except(SystemError):
@@ -57,17 +54,15 @@ def EncodeKMD(FileName):
     # File Compress
     buf2 = zlib.compress(buf)
 
-    print(buf2)
+    print(type(buf2))
 
     buf3 = b''
     for i in buf2:
+        print(type(i))
         buf3 += (i^0xFF).to_bytes(1,'little')
     
-    
-
     # Make Header
     buf4 = b'KAVM' + buf3
-
 
     f = buf4   
     for i in range(3):
@@ -84,7 +79,6 @@ def EncodeKMD(FileName):
 
     print('{} : {}'.format(FileName, kmd_name))
 
-
 if __name__ == '__main__':
     # File Open
     if len(sys.argv) != 3:
@@ -94,4 +88,4 @@ if __name__ == '__main__':
     FileName = sys.argv[1]
     FileName2 = sys.argv[2]
     EncodeKMD(FileName)
-    print(DecodeKMD(FileName2))
+    print(DecodeKMD(FileName2).decode('ascii').split("\r\n"))
