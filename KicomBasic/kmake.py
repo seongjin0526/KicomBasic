@@ -2,7 +2,6 @@ import sys
 import zlib
 import hashlib
 import os
-import codecs
 
 """
     Maleware Pattern FIle Encryption
@@ -54,11 +53,8 @@ def EncodeKMD(FileName):
     # File Compress
     buf2 = zlib.compress(buf)
 
-    print(type(buf2))
-
     buf3 = b''
     for i in buf2:
-        print(type(i))
         buf3 += (i^0xFF).to_bytes(1,'little')
     
     # Make Header

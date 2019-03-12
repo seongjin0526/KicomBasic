@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b4f15150-5403-4401-baf6-2878c5364d60</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>kmake.py</StartupFile>
+    <StartupFile>KicomBasic.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -14,7 +14,7 @@
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterId>Global|PythonCore|3.7</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>MalwareDB.db MalwareDB.kmd</CommandLineArguments>
+    <CommandLineArguments>eicar.com.txt</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
