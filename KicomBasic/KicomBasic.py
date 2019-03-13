@@ -2,6 +2,7 @@ import sys
 import os
 import hashlib
 import zlib
+import scanmod
 
 from io import StringIO
 
@@ -66,13 +67,6 @@ def MakePatternDB() :
         if SizeDB.count(size) == 0:
             SizeDB.append(size)
 
-# Virus Detect
-def SearchVDB(fmd5):
-    for t in PatternDB :
-        if t[0] == fmd5 :
-            return True, t[1]
-    return False, ''
-
 # main
 if __name__ == '__main__' :
     LoadMalwareDB()
@@ -82,27 +76,14 @@ if __name__ == '__main__' :
         print('Usage : KicomBasic.py [File]')
         exit(0)
 
-    fname = sys.argv[1]
+    FileName = sys.argv[1]
 
-    size = os.path.getsize(fname)
-    if SizeDB.count(size):
-        fp = open(fname, 'rb')
-        buf = fp.read()
-        fp.close()
-
-        m = hashlib.md5()
-        m.update(buf)
-        fmd5 = m.hexdigest()
-        
-        ret, vname = SearchVDB(fmd5)
-        if ret == True :
-            print('{} : {}'.format(fname, vname))
-            os.remove(fname)
-            print('Complete to delete Malware File!')
-        else :
-            print('{} : ok'.format(fname))
-            print('Thanks')
+    result, MalewareName = scanmod.ScanMD5(PatternDB, SizeDB, FileName)
+    if result == True :
+        print('{} : {}'.format(FileName, MalewareName))
+        os.remove(FileName)
+        print('Complete to delete Malware File!')
     else :
-        print('{} : ok'.format(fname))
+        print('{} : ok'.format(FileName))
         print('Thanks')
        

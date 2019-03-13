@@ -30,6 +30,9 @@
     <Compile Include="kmake.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="scanmod.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
