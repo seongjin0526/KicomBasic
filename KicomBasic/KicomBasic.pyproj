@@ -26,6 +26,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="curemod.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="KicomBasic.py" />
     <Compile Include="kmake.py">
       <SubType>Code</SubType>
