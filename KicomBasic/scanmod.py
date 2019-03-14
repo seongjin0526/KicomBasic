@@ -40,6 +40,8 @@ def ScanMD5(MalHashDB, SizeDB, FileName):
     return result, MalwareName
 
 def ScanMalware(MalHashDB, SizeDB, MalStringDB, FileName):
+    print("[*} Malware Scan Start!")
+
     # Using MD5
     result, MalwareName = ScanMD5(MalHashDB, SizeDB, FileName)
     if result == True:

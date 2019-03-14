@@ -2,6 +2,7 @@ import sys
 import os
 import hashlib
 import zlib
+import imp
 
 import scanmod
 import curemod
@@ -91,11 +92,24 @@ if __name__ == '__main__' :
 
     if len(sys.argv) != 2:
         print('Usage : KicomBasic.py [File]')
-        exit(0)
+        sys.exit(0)
 
     FileName = sys.argv[1]
 
-    result, MalewareName = scanmod.ScanMalware(MalHashDB, SizeDB, MalStringDB, FileName)
+    # Using Pyinstaller & Extenal Module(scanmode.pyc)
+    # Make pyc Command : python.exe -m compileall scanmod.py
+    # ~.pyc File is in __pycache Directory
+
+    try :
+        m = 'scanmod'
+        f, modulename, desc = imp.find_module(m, [''])
+        module = imp.load_module(m, f, modulename, desc)
+        cmd = 'result, MalewareName = module.ScanMalware(MalHashDB, SizeDB, MalStringDB, FileName)'
+        exec(cmd)
+    except ImportError :
+        result, MalewareName = scanmod.ScanMalware(MalHashDB, SizeDB, MalStringDB, FileName)
+    
+    # result, MalewareName = scanmod.ScanMalware(MalHashDB, SizeDB, MalStringDB, FileName)
     
     if result == True :
         print('{} : {}'.format(FileName, MalewareName))
