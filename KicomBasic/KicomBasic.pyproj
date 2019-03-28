@@ -32,6 +32,9 @@
     <Compile Include="DummyPlugin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="eicar.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="KicomBasic.py" />
     <Compile Include="kmake.py">
       <SubType>Code</SubType>
